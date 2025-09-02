@@ -142,3 +142,48 @@ This project is licensed under the **BSD-3-Clause License**.
 
 Pull requests and issues are welcome! Please open an issue if you encounter a bug or would like to request a feature.
 
+
+
+## 🔌 How It Works (Simple Diagram)
+
+```
++------------------+          WebSocket           +------------------+
+|  Your Python App | <-------------------------> |  WebSocket Server|
+|                  |   (always open connection)  |  (e.g. market    |
+|  - send messages |                              |   data feed,     |
+|  - receive data  |                              |   chat server)   |
++------------------+                              +------------------+
+
+- Your app connects once and stays connected.
+- The server can push data to you anytime (no need to ask repeatedly).
+- You can send messages back instantly.
+```
+
+This project is a Python WebSocket client.
+
+A WebSocket is like a special internet pipe between your program and a server.
+Unlike normal HTTP requests (which are one-way and short-lived), a WebSocket stays open all the time so that:
+
+The server can keep sending you live updates (streaming data).
+
+You can send data back instantly without reconnecting every time.
+
+What this project does:
+
+Connects to a WebSocket server (e.g., a stock price feed, IoT device hub, chat server, etc.).
+
+Keeps the connection alive automatically (reconnects if it drops, sends heartbeats so it doesn’t time out).
+
+Receives messages in real time (your code gets them instantly via a callback function).
+
+Sends messages back (text or binary) using a queue, so you don’t lose data even if you send faster than the network.
+
+Handles errors safely (decides when to retry or when it’s a fatal error, similar to robust C++ clients).
+
+Example in real life:
+
+If you were building a trading app, this client could connect to a stock market data feed and stream live prices.
+
+If you were making a chat app, it could keep the chat open so you receive messages instantly.
+
+If you had IoT sensors, they could send data continuously to your server via this client.
